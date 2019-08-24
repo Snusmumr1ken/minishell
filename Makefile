@@ -7,7 +7,7 @@
 
 #############           Varaibles            #############
 #                                                        #
-FILES = main
+FILES = main no_warranty
 
 SRC = $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ = $(addsuffix .o, $(FILES))
