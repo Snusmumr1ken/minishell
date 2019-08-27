@@ -1,18 +1,5 @@
 #include "../includes/minishell.h"
 
-void	parse_line(char *line)
-{
-	if (!ft_strcmp(line, "exit"))
-		exit(0);
-	if (!ft_strcmp(line, "cd"))
-		chdir("/");
-	if (!ft_strcmp(line, "pwd"))
-	{
-		pwd();
-		write(1, "\n", 1);
-	}
-}
-
 void	main_loop(void)
 {
 	char *line;
@@ -25,7 +12,6 @@ void	main_loop(void)
 		write(1, "$ ", 2);
 		get_next_line(STDIN_FILENO, &line);
 		parse_line(line);
-		free(line);
 	}
 }
 

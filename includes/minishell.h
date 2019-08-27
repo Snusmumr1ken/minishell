@@ -12,6 +12,7 @@
 # include <uuid/uuid.h>
 
 void	tell_no_warranty(void);
+void	parse_line(char *line);
 void	pwd(void);
 
 #endif

@@ -7,7 +7,7 @@
 
 #############           Varaibles            #############
 #                                                        #
-FILES = main no_warranty pwd cd
+FILES = main parse_command no_warranty pwd cd
 
 SRC = $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ = $(addsuffix .o, $(FILES))

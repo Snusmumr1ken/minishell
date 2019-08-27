@@ -18,6 +18,7 @@
 # include <string.h>
 # include <stdlib.h>
 
+int						is_alnum(char c);
 int						ft_strlen(const char *str);
 long long				ft_atoi(const char *str);
 unsigned long long		ft_abs(long long nb);

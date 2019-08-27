@@ -10,6 +10,7 @@
 LIBFT_FUNC	= get_next_line ft_memmove ft_memcpy ft_abs ft_atoi \
 			  ft_sqrt ft_strcat ft_strchr ft_strclr ft_strcmp \
 			  ft_strcpy ft_strdup ft_strsub ft_strncmp ft_strjoin \
+			  isalnum \
 
 PRINTF_FUNC	= ft_printf ftoa manage_binary manage_char manage_decimal \
 			  manage_float manage_hex manage_octal manage_percent \
