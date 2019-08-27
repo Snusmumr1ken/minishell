@@ -6,13 +6,12 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <dirent.h>
-# include <errno.h>
 # include <stdbool.h>
-# include <time.h>
 # include <pwd.h>
 # include <grp.h>
 # include <uuid/uuid.h>
 
 void	tell_no_warranty(void);
+void	pwd(void);
 
 #endif
