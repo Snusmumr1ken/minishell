@@ -25,17 +25,23 @@ static char		*delete_leading_zeros_and_tabs(char *line)
 
 void			parse_line(char *line)
 {
-	char		*command;
+	char		*line2;
+	char 		**command;
+	int			i;
 
-	command = delete_leading_zeros_and_tabs(line);
-	free(line);
-	if (!command)
+	line2 = delete_leading_zeros_and_tabs(line);
+	if (!line2)
 		return ;
-	if (!ft_strncmp(command, "exit", 4) && !is_alnum(command[4]))
+	command = split(line);
+	if (!ft_strcmp(command[0], "exit"))
 		exit(0);
-	if (!ft_strncmp(command, "pwd", 3) && !is_alnum(command[3]))
+	if (!ft_strcmp(command[0], "pwd"))
 	{
 		pwd();
 		write(1, "\n", 1);
 	}
+	i = -1;
+	while (command[++i])
+		free(command[i]);
+	free(command);
 }

@@ -12,6 +12,7 @@ void	main_loop(void)
 		write(1, "$ ", 2);
 		get_next_line(STDIN_FILENO, &line);
 		parse_line(line);
+		free(line);
 	}
 }
 

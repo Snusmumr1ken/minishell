@@ -11,8 +11,9 @@
 # include <grp.h>
 # include <uuid/uuid.h>
 
-void	tell_no_warranty(void);
-void	parse_line(char *line);
-void	pwd(void);
+void			tell_no_warranty(void);
+void			parse_line(char *line);
+void			pwd(void);
+char			**split(const char *str);
 
 #endif

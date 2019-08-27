@@ -12,7 +12,7 @@
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# define BUFF_SIZE 7
+# define BUFF_SIZE 1
 
 # include <unistd.h>
 # include <string.h>
@@ -40,5 +40,6 @@ void					*ft_memmove(void *dest, void *src, size_t n);
 void					ft_strclr(char *s);
 int						ft_strncmp(char *s1, char *s2, unsigned int n);
 char					*ft_strjoin(char const *s1, char const *s2);
+char					**ft_strsplit(const char *str, char c);
 
 #endif
