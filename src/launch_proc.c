@@ -19,7 +19,7 @@ void		launch_proc(char **args)
 	if (pid == 0)
 	{
 		if (execve(args[0], args, NULL) == -1)
-			exit_with_error("unable to run new process\0");
+			exit_with_error("command not found\0");
 	}
 	else if (pid < 0)
 		exit_with_error("error forking\0");

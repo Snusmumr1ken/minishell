@@ -10,11 +10,13 @@ static void			exec_coms(char **coms)
 	while (coms[i])
 	{
 		tokens = parse_one_command(coms[i]);
+		if (!tokens)
+			return ;
 		execute_command(tokens);
 		i++;
 		j = -1;
-		while (tokens[++i])
-			free(tokens[i]);
+		while (tokens[++j])
+			free(tokens[j]);
 		free(tokens);
 		tokens = NULL;
 	}
@@ -24,8 +26,6 @@ static void			main_loop(void)
 {
 	char 			*line;
 	char			**coms;
-	char 			**tokens;
-	int 			i;
 
 	while (1)
 	{
@@ -33,6 +33,7 @@ static void			main_loop(void)
 		write(1, "$ ", 2);
 		get_next_line(STDIN_FILENO, &line);
 		coms = ft_strsplit(line, ';');
+		exec_coms(coms);
 		free(line);
 	}
 }

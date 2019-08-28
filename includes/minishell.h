@@ -17,7 +17,7 @@ void			parse_line(char *line);
 void			pwd(bool color);
 char			**split(const char *str);
 void			exit_with_error(char *error_text);
-void			parse_one_command(char *com);
+char			**parse_one_command(char *com);
 void			execute_command(char **tokens);
 void			launch_proc(char **args);
 
