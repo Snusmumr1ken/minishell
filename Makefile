@@ -8,7 +8,7 @@
 #############           Varaibles            #############
 #                                                        #
 FILES = main parse_command no_warranty custom_split \
-        cd pwd launch_proc\
+        cd pwd echo launch_proc\
 
 SRC = $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ = $(addsuffix .o, $(FILES))

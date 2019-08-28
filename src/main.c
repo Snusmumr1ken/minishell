@@ -18,11 +18,19 @@ static void			free_tokens(char **tokens)
 static void			exec_coms(char **coms)
 {
 	int				i;
+	char 			*l;
 	char			**tokens;
 
 	i = 0;
 	while (coms[i])
 	{
+		l = delete_leading_zeros_and_tabs(coms[i]);
+		if (!ft_strncmp(l, "echo ", 5) || !ft_strncmp(l, "echo\t", 5) ||
+			!ft_strcmp(l, "echo"))
+		{
+			echo(l);
+			return ;
+		}
 		tokens = parse_one_command(coms[i]);
 		if (!tokens)
 			return ;

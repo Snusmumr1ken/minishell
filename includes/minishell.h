@@ -21,5 +21,7 @@ char			**parse_one_command(char *com);
 void			execute_command(char **tokens);
 void			launch_proc(char **args);
 void			cd(char **args);
+void			echo(char *l);
+char			*delete_leading_zeros_and_tabs(const char *line);
 
 #endif

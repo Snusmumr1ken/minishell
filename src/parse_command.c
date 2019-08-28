@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-static char		*delete_leading_zeros_and_tabs(char *line)
+char		*delete_leading_zeros_and_tabs(const char *line)
 {
 	char 		*new_str;
 	short		i;
