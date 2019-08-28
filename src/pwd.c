@@ -5,7 +5,7 @@ void	pwd(bool color)
 	char dir[1000];
 
 	//нужно запротектить
-	if ((getcwd(dir, 1000)) == NULL)
+	if (getcwd(dir, 1000) == NULL)
 		exit_with_error("getcwd failed in pwd function\0");
 	if (color)
 	{

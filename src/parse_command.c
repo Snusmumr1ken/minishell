@@ -23,7 +23,7 @@ static char		*delete_leading_zeros_and_tabs(char *line)
 	return (new_str);
 }
 
-static void		parse_one_command(char *com)
+char		**parse_one_command(char *com)
 {
 	char 		*command;
 	char 		**tokens;
@@ -32,29 +32,7 @@ static void		parse_one_command(char *com)
 	command = delete_leading_zeros_and_tabs(com);
 	free(com);
 	if (!command)
-		return ;
+		return (NULL);
 	tokens = split(command);
-	if (!ft_strcmp(tokens[0], "exit"))
-		exit(0);
-	if (!ft_strcmp(tokens[0], "pwd"))
-		pwd(0);
-	i = -1;
-	while (tokens[++i])
-		free(tokens[i]);
-	free(tokens);
-}
-
-void			parse_line(char *line)
-{
-	char 		**commands;
-	int			i;
-
-	commands = ft_strsplit(line, ';');
-	i = 0;
-	while (commands[i])
-	{
-		parse_one_command(commands[i]);
-		i++;
-	}
-	free(commands);
+	return (tokens);
 }
