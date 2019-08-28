@@ -13,7 +13,8 @@
 
 void			tell_no_warranty(void);
 void			parse_line(char *line);
-void			pwd(void);
+void			pwd(bool color);
 char			**split(const char *str);
+void			exit_with_error(char *error_text);
 
 #endif

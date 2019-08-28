@@ -23,25 +23,38 @@ static char		*delete_leading_zeros_and_tabs(char *line)
 	return (new_str);
 }
 
+static void		parse_one_command(char *com)
+{
+	char 		*command;
+	char 		**tokens;
+	int 		i;
+
+	command = delete_leading_zeros_and_tabs(com);
+	free(com);
+	if (!command)
+		return ;
+	tokens = split(command);
+	if (!ft_strcmp(tokens[0], "exit"))
+		exit(0);
+	if (!ft_strcmp(tokens[0], "pwd"))
+		pwd(0);
+	i = -1;
+	while (tokens[++i])
+		free(tokens[i]);
+	free(tokens);
+}
+
 void			parse_line(char *line)
 {
-	char		*line2;
-	char 		**command;
+	char 		**commands;
 	int			i;
 
-	line2 = delete_leading_zeros_and_tabs(line);
-	if (!line2)
-		return ;
-	command = split(line);
-	if (!ft_strcmp(command[0], "exit"))
-		exit(0);
-	if (!ft_strcmp(command[0], "pwd"))
+	commands = ft_strsplit(line, ';');
+	i = 0;
+	while (commands[i])
 	{
-		pwd();
-		write(1, "\n", 1);
+		parse_one_command(commands[i]);
+		i++;
 	}
-	i = -1;
-	while (command[++i])
-		free(command[i]);
-	free(command);
+	free(commands);
 }
