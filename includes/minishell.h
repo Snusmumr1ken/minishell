@@ -20,5 +20,6 @@ void			exit_with_error(char *error_text);
 char			**parse_one_command(char *com);
 void			execute_command(char **tokens);
 void			launch_proc(char **args);
+void			cd(char **args);
 
 #endif

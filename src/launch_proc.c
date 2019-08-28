@@ -4,8 +4,10 @@ void		execute_command(char **tokens)
 {
 	if (!ft_strcmp(tokens[0], "exit"))
 		exit(0);
-	if (!ft_strcmp(tokens[0], "pwd"))
+	else if (!ft_strcmp(tokens[0], "pwd"))
 		pwd(0);
+	else if (!ft_strcmp(tokens[0], "cd"))
+		cd(tokens);
 	else
 		launch_proc(tokens);
 }

@@ -1,9 +1,23 @@
 #include "../includes/minishell.h"
 
+static void			free_tokens(char **tokens)
+{
+	int 			i;
+
+	i = 0;
+	while (tokens[i])
+	{
+		free(tokens[i]);
+		tokens[i] = NULL;
+		i++;
+	}
+	free(tokens);
+	tokens = NULL;
+}
+
 static void			exec_coms(char **coms)
 {
 	int				i;
-	int 			j;
 	char			**tokens;
 
 	i = 0;
@@ -13,12 +27,8 @@ static void			exec_coms(char **coms)
 		if (!tokens)
 			return ;
 		execute_command(tokens);
+		free_tokens(tokens);
 		i++;
-		j = -1;
-		while (tokens[++j])
-			free(tokens[j]);
-		free(tokens);
-		tokens = NULL;
 	}
 }
 
