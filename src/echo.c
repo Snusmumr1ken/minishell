@@ -21,6 +21,21 @@ static bool		check_line_for_quotes(const char *l)
 	return (1);
 }
 
+static void		write_from_quotes(char *l, int *i)
+{
+	int 		pos;
+
+	pos = *i;
+	pos++;
+	while (l[pos] != '\'' && l[pos] != '\"')
+	{
+		write(1, &l[pos], 1);
+		pos++;
+	}
+	write(1, " ", 1);
+	*i = pos;
+}
+
 void			echo(char *l)
 {
 	int			i;
@@ -33,15 +48,7 @@ void			echo(char *l)
 	while (l[i])
 	{
 		if (l[i] == '\'' || l[i] == '\"')
-		{
-			i++;
-			while (l[i] != '\'' && l[i] != '\"')
-			{
-				write(1, &l[i], 1);
-				i++;
-			}
-			write(1, " ", 1);
-		}
+			write_from_quotes(l, &i);
 		else if (l[i] != ' ' && l[i] != '\t')
 			write(1, &l[i], 1);
 		else if (l[i - 1] != ' ' && l[i - 1] != '\t' && l[i - 1] != '\'' && l[i - 1] != '\"')

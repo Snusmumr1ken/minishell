@@ -8,6 +8,8 @@ void		execute_command(char **tokens)
 		pwd(0);
 	else if (!ft_strcmp(tokens[0], "cd"))
 		cd(tokens);
+	else if (!ft_strcmp(tokens[0], "clear"))
+		ft_printf("\x1b\x5b\x48\x1b\x5b\x32\x4a");
 	else
 		launch_proc(tokens);
 }
