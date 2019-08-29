@@ -9,7 +9,7 @@ void		execute_command(char **tokens)
 	else if (!ft_strcmp(tokens[0], "cd"))
 		cd(tokens);
 	else if (!ft_strcmp(tokens[0], "clear"))
-		ft_printf("\x1b\x5b\x48\x1b\x5b\x32\x4a");
+		write(1, "\33[H\33[2J", 7);
 	else
 		launch_proc(tokens);
 }
