@@ -56,16 +56,11 @@ static void			main_loop(void)
 	}
 }
 
-void			exit_with_error(char *error_text)
-{
-	write(2, "minishell: ", 11);
-	write(2, error_text, ft_strlen(error_text));
-	write(2, "\n", 1);
-	exit(2);
-}
-
 int	main(void)
 {
+	t_data	data;
+
+	initialize(&data);
 	tell_no_warranty();
 	main_loop();
 	return (0);

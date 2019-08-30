@@ -3,6 +3,7 @@
 
 # include "../libft/includes/libft.h"
 # include <stdio.h>
+# include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
@@ -12,7 +13,16 @@
 # include <grp.h>
 # include <uuid/uuid.h>
 
+typedef struct	s_data
+{
+	char		*PATH;
+	char 		*HOME;
+	char 		*PWD;
+}				t_data;
+
+void			free_data(t_data *data);
 void			tell_no_warranty(void);
+void			initialize(t_data *data);
 void			parse_line(char *line);
 void			pwd(bool color);
 char			**split(const char *str);
