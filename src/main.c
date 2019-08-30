@@ -15,7 +15,7 @@ static void			free_tokens(char **tokens)
 	tokens = NULL;
 }
 
-static void			exec_coms(char **coms)
+static void			exec_coms(char **coms, t_data *data)
 {
 	int				i;
 	char 			*l;
@@ -34,24 +34,24 @@ static void			exec_coms(char **coms)
 		tokens = parse_one_command(coms[i]);
 		if (!tokens)
 			return ;
-		execute_command(tokens);
+		execute_command(tokens, data);
 		free_tokens(tokens);
 		i++;
 	}
 }
 
-static void			main_loop(void)
+static void			main_loop(t_data *data)
 {
 	char 			*line;
 	char			**coms;
 
 	while (1)
 	{
-		pwd(1);
+		pwd(1, data);
 		write(1, "$ ", 2);
 		get_next_line(STDIN_FILENO, &line);
 		coms = ft_strsplit(line, ';');
-		exec_coms(coms);
+		exec_coms(coms, data);
 		free(line);
 	}
 }
@@ -62,6 +62,6 @@ int	main(void)
 
 	initialize(&data);
 	tell_no_warranty();
-	main_loop();
+	main_loop(&data);
 	return (0);
 }

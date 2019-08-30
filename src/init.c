@@ -23,7 +23,7 @@ static void			creat_minishellrc(t_data *data)
 
 	fd = open(".minishellrc", O_WRONLY | O_CREAT);
 	if (fd == -1)
-		exit_with_error("minishellrc is not present, but it also cannot be created\0");
+		exit_with_error("minishellrc is not present, but it also cannot be created\0", data);
 	write(fd, data->PWD, ft_strlen(data->PWD));
 	write(fd, "\n", 1);
 	write(fd, data->HOME, ft_strlen(data->HOME));
@@ -40,7 +40,7 @@ static void			init_from_rc(t_data *data)
 
 	fd = open(".minishellrc", O_RDONLY);
 	if (fd == -1)
-		exit_with_error("minishellrc is present, but I can't read from it\0");
+		exit_with_error("minishellrc is present, but I can't read from it\0", data);
 	while ((res = get_next_line(fd, &line)) == 1)
 	{
 		if (!ft_strncmp(line, "PATH=", 5))
@@ -49,11 +49,17 @@ static void			init_from_rc(t_data *data)
 			data->HOME = ft_strdup(line);
 		else if (!ft_strncmp(line, "PWD=", 4))
 			data->PWD = ft_strdup(line);
+		free(line);
 	}
+	free(line);
 }
 
 void				initialize(t_data *data)
 {
+	data->PATH = NULL;
+	data->HOME = NULL;
+	data->PWD = NULL;
+
 	if (access(".minishellrc", F_OK) == -1)
 	{
 		set_data_from_sys(data);

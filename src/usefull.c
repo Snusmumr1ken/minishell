@@ -10,7 +10,7 @@ void			free_data(t_data *data)
 		free(data->PATH);
 }
 
-void			exit_with_error(char *error_text)
+void			exit_with_error(char *error_text, t_data *data)
 {
 	write(2, "minishell: ", 11);
 	write(2, error_text, ft_strlen(error_text));
