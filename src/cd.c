@@ -31,28 +31,42 @@ static void		move_home(t_data *data)
 	free(home);
 }
 
-static void		move_by_path(char **args)
+void		create_path(char *path, char *p, char *home)
 {
-	char	*path;
 	int 	i;
 	int 	j;
 
-	if (args[1][0] != '.' && args[1][0] != '/')
+	i = 5;
+	j = 0;
+	while (home[i])
 	{
-		path = (char*)malloc(ft_strlen(args[1]) + 2);
-		path[0] = '.';
-		path[1] = '/';
-		i = 0;
-		j = 2;
-		while (args[1][i])
-		{
-			path[j] = args[1][i];
-			i++;
-			j++;
-		}
+		path[j] = home[i];
+		i++;
+		j++;
 	}
-	if (chdir(args[1]) != 0)
+	i = 1;
+	while (p[i])
+	{
+		path[j] = p[i];
+		i++;
+		j++;
+	}
+}
+
+void		move_by_path(char *p, t_data *data)
+{
+	char	*path;
+
+	if (p[0] == '~')
+	{
+		path = (char*)malloc(ft_strlen(data->HOME) + ft_strlen(p));
+		create_path(path, p, data->HOME);
+	}
+	else
+		path = ft_strdup(p);
+	if (chdir(path) != 0)
 		write(2, "minishell: cd: unable to move there\n", 36);
+	free(path);
 }
 
 void			cd(char **args, t_data *data)
@@ -62,5 +76,5 @@ void			cd(char **args, t_data *data)
 	else if (args[2] != NULL)
 		write(2, "minishell: cd: too many arguments\n", 34);
 	else
-		move_by_path(args);
+		move_by_path(args[1], data);
 }
