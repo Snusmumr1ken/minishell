@@ -2,8 +2,6 @@
 
 void			free_data(t_data *data)
 {
-	if (data->PWD)
-		free(data->PWD);
 	if (data->HOME)
 		free(data->HOME);
 	if (data->PATH)

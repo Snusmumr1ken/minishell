@@ -34,7 +34,7 @@ void			execute_command(char **tokens, t_data *data)
 	else if (!ft_strcmp(tokens[0], "pwd"))
 		pwd(0, data);
 	else if (!ft_strcmp(tokens[0], "cd"))
-		cd(tokens);
+		cd(tokens, data);
 	else if (!ft_strcmp(tokens[0], "clear"))
 		write(1, "\33[H\33[2J", 7);
 	else
