@@ -67,6 +67,7 @@ int	main(void)
 {
 	t_data	data;
 
+	write(1, "\33[H\33[2J", 7);
 	initialize(&data);
 	tell_no_warranty();
 	main_loop(&data);

@@ -10,7 +10,7 @@ static void		launch_proc(char **args, t_data *data)
 	{
 		if (execve(args[0], args, NULL) == -1)
 		{
-			write(2, "command not found\n", 18);
+			write(2, "minishell: command not found\n", 29);
 			exit(1);
 		}
 	}
