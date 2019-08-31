@@ -15,28 +15,35 @@ static void			free_tokens(char **tokens)
 	tokens = NULL;
 }
 
+static bool			manage_echo(char **coms, int i)
+{
+	char 			*l;
+
+	l = delete_leading_zeros_and_tabs(coms[i]);
+	if (!ft_strncmp(l, "echo ", 5) || !ft_strncmp(l, "echo\t", 5) ||
+		!ft_strcmp(l, "echo"))
+	{
+		echo(l);
+		return (1);
+	}
+	return (0);
+}
+
 static void			exec_coms(char **coms, t_data *data)
 {
 	int				i;
-	char 			*l;
 	char			**tokens;
 
-	i = 0;
-	while (coms[i])
+	i = -1;
+	while (coms[++i])
 	{
-		l = delete_leading_zeros_and_tabs(coms[i]);
-		if (!ft_strncmp(l, "echo ", 5) || !ft_strncmp(l, "echo\t", 5) ||
-			!ft_strcmp(l, "echo"))
-		{
-			echo(l);
-			return ;
-		}
+		if (manage_echo(coms, i))
+			continue ;
 		tokens = parse_one_command(coms[i]);
 		if (!tokens)
 			return ;
 		execute_command(tokens, data);
 		free_tokens(tokens);
-		i++;
 	}
 }
 

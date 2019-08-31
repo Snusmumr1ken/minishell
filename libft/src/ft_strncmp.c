@@ -10,10 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+
 int		ft_strncmp(char *s1, char *s2, unsigned int n)
 {
 	unsigned int i;
 
+	if (s1 == NULL || s2 == NULL)
+		return (10);
 	i = 0;
 	if (n == 0)
 		return (0);
