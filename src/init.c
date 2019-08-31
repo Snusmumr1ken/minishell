@@ -52,6 +52,7 @@ void				initialize(t_data *data)
 {
 	data->PATH = NULL;
 	data->HOME = NULL;
+	data->OLDPWD = NULL;
 
 	if (access(".minishellrc", F_OK) == -1)
 	{
@@ -60,4 +61,5 @@ void				initialize(t_data *data)
 	}
 	else
 		init_from_rc(data);
+	data->OLDPWD = cut_data_home(data);
 }

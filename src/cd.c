@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-static char		*cut_data_home(t_data *data)
+char			*cut_data_home(t_data *data)
 {
 	char 		*home;
 	int 		len;
@@ -69,12 +69,34 @@ void		move_by_path(char *p, t_data *data)
 	free(path);
 }
 
+static void		call_move_home(t_data *data)
+{
+	char 		*p;
+
+	p = cut_data_home(data);
+	free(data->OLDPWD);
+	data->OLDPWD = ft_strdup(p);
+	move_home(data);
+	free(p);
+}
+
 void			cd(char **args, t_data *data)
 {
 	if (args[1] == NULL)
-		move_home(data);
+		call_move_home(data);
+	else if (!ft_strcmp(args[1], "-"))
+	{
+		ft_printf("%s\n%s\n", data->HOME, data->OLDPWD);
+		if (!ft_strcmp(data->OLDPWD, data->HOME))
+			call_move_home(data);
+		move_by_path(data->OLDPWD, data);
+	}
 	else if (args[2] != NULL)
 		write(2, "minishell: cd: too many arguments\n", 34);
 	else
+	{
+		free(data->OLDPWD);
+		data->OLDPWD = ft_strdup(args[1]);
 		move_by_path(args[1], data);
+	}
 }
