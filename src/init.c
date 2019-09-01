@@ -26,6 +26,7 @@ static void			creat_minishellrc(t_data *data)
 	write(fd, "\n", 1);
 	write(fd, data->PATH, ft_strlen(data->PATH));
 	write(fd, "\n", 1);
+	close(fd);
 }
 
 static void			init_from_rc(t_data *data)
@@ -46,6 +47,7 @@ static void			init_from_rc(t_data *data)
 		free(line);
 	}
 	free(line);
+	close(fd);
 }
 
 void				initialize(t_data *data)

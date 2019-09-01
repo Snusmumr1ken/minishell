@@ -33,5 +33,6 @@ void			cd(char **args, t_data *data);
 void			echo(char *l);
 char			*delete_leading_zeros_and_tabs(const char *line);
 char			*cut_data_home(t_data *data);
+char			*check_env(char **args, t_data *data);
 
 #endif
