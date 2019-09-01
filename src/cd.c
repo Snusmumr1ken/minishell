@@ -86,7 +86,6 @@ void			cd(char **args, t_data *data)
 		call_move_home(data);
 	else if (!ft_strcmp(args[1], "-"))
 	{
-		ft_printf("%s\n%s\n", data->HOME, data->OLDPWD);
 		if (!ft_strcmp(data->OLDPWD, data->HOME))
 			call_move_home(data);
 		move_by_path(data->OLDPWD, data);
