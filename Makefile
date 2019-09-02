@@ -9,7 +9,7 @@
 #                                                        #
 FILES = main parse_command no_warranty custom_split \
         cd pwd echo launch_proc init usefull \
-        create_pathes env\
+        create_pathes env setenv\
 
 SRC = $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ = $(addsuffix .o, $(FILES))

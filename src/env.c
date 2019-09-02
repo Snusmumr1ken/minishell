@@ -14,5 +14,5 @@ void			env(void)
 		free(line);
 	}
 	free(line);
+	close(fd);
 }
-
