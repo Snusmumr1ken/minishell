@@ -34,6 +34,8 @@ void			execute_command(t_trash *t, t_data *data)
 {
 	if (!ft_strcmp(t->tokens[0], "pwd"))
 		pwd(0, data);
+	else if (!ft_strcmp(t->tokens[0], "env"))
+		env();
 	else if (!ft_strcmp(t->tokens[0], "cd"))
 		cd(t->tokens, data);
 	else if (!ft_strcmp(t->tokens[0], "clear"))

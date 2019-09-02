@@ -29,6 +29,7 @@ typedef struct	s_data
 
 void			free_tokens(char **tokens);
 void			free_data(t_data *data);
+void			env(void);
 void			tell_no_warranty(void);
 void			initialize(t_data *data);
 void			parse_line(char *line);
