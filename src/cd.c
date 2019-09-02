@@ -7,7 +7,7 @@ char			*cut_data_home(t_data *data)
 	int 		i;
 	int 		j;
 
-	len = ft_strlen(data->HOME) - 5;
+	len = ft_strlen(data->HOME) - 4;
 	home = (char*)malloc(len);
 	home[len - 1] = '\0';
 	i = 5;

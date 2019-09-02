@@ -32,7 +32,19 @@ static bool			manage_echo(char **coms, int i)
 	return (0);
 }
 
-static void			exec_coms(char **coms, t_data *data)
+static void			manage_exit(char **coms, char **tokens, t_data *data, char *line)
+{
+	if (!ft_strcmp(tokens[0], "exit"))
+	{
+		free(line);
+		free_data(data);
+		free_tokens(tokens);
+		free(coms);
+		exit(0);
+	}
+}
+
+static void			exec_coms(char **coms, t_data *data, char *line)
 {
 	int				i;
 	char			**tokens;
@@ -41,10 +53,14 @@ static void			exec_coms(char **coms, t_data *data)
 	while (coms[++i])
 	{
 		if (manage_echo(coms, i))
+		{
+			free(coms[i]);
 			continue ;
+		}
 		tokens = parse_one_command(coms[i]);
 		if (!tokens)
 			return ;
+		manage_exit(coms, tokens, data, line);
 		execute_command(tokens, data);
 		free_tokens(tokens);
 	}
@@ -61,7 +77,7 @@ static void			main_loop(t_data *data)
 		write(1, "$ ", 2);
 		get_next_line(STDIN_FILENO, &line);
 		coms = ft_strsplit(line, ';');
-		exec_coms(coms, data);
+		exec_coms(coms, data, line);
 		free(line);
 		free(coms);
 	}

@@ -28,12 +28,7 @@ static void		launch_proc(char **args, t_data *data)
 
 void			execute_command(char **tokens, t_data *data)
 {
-	if (!ft_strcmp(tokens[0], "exit"))
-	{
-		free_data(data);
-		exit(0);
-	}
-	else if (!ft_strcmp(tokens[0], "pwd"))
+	if (!ft_strcmp(tokens[0], "pwd"))
 		pwd(0, data);
 	else if (!ft_strcmp(tokens[0], "cd"))
 		cd(tokens, data);
