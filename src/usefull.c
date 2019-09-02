@@ -1,5 +1,20 @@
 #include "../includes/minishell.h"
 
+void			free_tokens(char **tokens)
+{
+	int 			i;
+
+	i = 0;
+	while (tokens[i])
+	{
+		free(tokens[i]);
+		tokens[i] = NULL;
+		i++;
+	}
+	free(tokens);
+	tokens = NULL;
+}
+
 void			free_data(t_data *data)
 {
 	if (data->HOME)

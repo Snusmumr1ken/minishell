@@ -1,20 +1,5 @@
 #include "../includes/minishell.h"
 
-void			free_tokens(char **tokens)
-{
-	int 			i;
-
-	i = 0;
-	while (tokens[i])
-	{
-		free(tokens[i]);
-		tokens[i] = NULL;
-		i++;
-	}
-	free(tokens);
-	tokens = NULL;
-}
-
 static bool			manage_echo(char **coms, int i)
 {
 	char 			*l;
@@ -32,54 +17,49 @@ static bool			manage_echo(char **coms, int i)
 	return (0);
 }
 
-static void			manage_exit(char **coms, char **tokens, t_data *data, char *line)
+static void			manage_exit(t_trash *t, t_data *data)
 {
-	if (!ft_strcmp(tokens[0], "exit"))
+	if (!ft_strcmp(t->tokens[0], "exit"))
 	{
-		free(line);
+		free(t->line);
 		free_data(data);
-		free_tokens(tokens);
-		free(coms);
+		free_tokens(t->tokens);
+		free_tokens(t->commands);
 		exit(0);
 	}
 }
 
-static void			exec_coms(char **coms, t_data *data, char *line)
+static void			exec_coms(t_trash *t, t_data *data)
 {
 	int				i;
-	char			**tokens;
 
 	i = -1;
-	while (coms[++i])
+	while (t->commands[++i])
 	{
-		if (manage_echo(coms, i))
-		{
-			free(coms[i]);
+		if (manage_echo(t->commands, i))
 			continue ;
-		}
-		tokens = parse_one_command(coms[i]);
-		if (!tokens)
+		t->tokens = parse_one_command(t->commands[i]);
+		if (!t->tokens)
 			return ;
-		manage_exit(coms, tokens, data, line);
-		execute_command(tokens, data);
-		free_tokens(tokens);
+		manage_exit(t, data);
+		execute_command(t, data);
+		free_tokens(t->tokens);
 	}
+	free_tokens(t->commands);
 }
 
 static void			main_loop(t_data *data)
 {
-	char 			*line;
-	char			**coms;
+	t_trash			t;
 
 	while (1)
 	{
 		pwd(1, data);
 		write(1, "$ ", 2);
-		get_next_line(STDIN_FILENO, &line);
-		coms = ft_strsplit(line, ';');
-		exec_coms(coms, data, line);
-		free(line);
-		free(coms);
+		get_next_line(STDIN_FILENO, &t.line);
+		t.commands = ft_strsplit(t.line, ';');
+		exec_coms(&t, data);
+		free(t.line);
 	}
 }
 

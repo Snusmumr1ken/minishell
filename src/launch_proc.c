@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-static void		launch_proc(char **args, t_data *data)
+static void		launch_proc(t_trash *t, t_data *data)
 {
 	pid_t		pid;
 	int			status;
@@ -9,9 +9,13 @@ static void		launch_proc(char **args, t_data *data)
 	pid = fork();
 	if (pid == 0)
 	{
-		path = check_env(args, data);
-		if (path == NULL || (execve(path, args, NULL)) == -1)
+		path = check_env(t->tokens, data);
+		if (path == NULL || (execve(path, t->tokens, NULL)) == -1)
 		{
+			free(t->line);
+			free_tokens(t->commands);
+			free_tokens(t->tokens);
+			free_data(data);
 			write(2, "minishell: command not found\n", 29);
 			exit(1);
 		}
@@ -26,14 +30,14 @@ static void		launch_proc(char **args, t_data *data)
 	}
 }
 
-void			execute_command(char **tokens, t_data *data)
+void			execute_command(t_trash *t, t_data *data)
 {
-	if (!ft_strcmp(tokens[0], "pwd"))
+	if (!ft_strcmp(t->tokens[0], "pwd"))
 		pwd(0, data);
-	else if (!ft_strcmp(tokens[0], "cd"))
-		cd(tokens, data);
-	else if (!ft_strcmp(tokens[0], "clear"))
+	else if (!ft_strcmp(t->tokens[0], "cd"))
+		cd(t->tokens, data);
+	else if (!ft_strcmp(t->tokens[0], "clear"))
 		write(1, "\33[H\33[2J", 7);
 	else
-		launch_proc(tokens, data);
+		launch_proc(t, data);
 }

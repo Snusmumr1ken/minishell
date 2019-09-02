@@ -29,7 +29,6 @@ char		**parse_one_command(char *com)
 	char 		**tokens;
 
 	command = delete_leading_zeros_and_tabs(com);
-	free(com);
 	if (!command)
 		return (NULL);
 	tokens = split(command);

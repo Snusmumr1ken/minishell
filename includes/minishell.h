@@ -13,6 +13,13 @@
 # include <grp.h>
 # include <uuid/uuid.h>
 
+typedef struct	s_trash
+{
+	char 		*line;
+	char 		**commands;
+	char 		**tokens;
+}				t_trash;
+
 typedef struct	s_data
 {
 	char		*PATH;
@@ -20,6 +27,7 @@ typedef struct	s_data
 	char 		*OLDPWD;
 }				t_data;
 
+void			free_tokens(char **tokens);
 void			free_data(t_data *data);
 void			tell_no_warranty(void);
 void			initialize(t_data *data);
@@ -28,7 +36,7 @@ void			pwd(bool color, t_data *data);
 char			**split(const char *str);
 void			exit_with_error(char *error_text, t_data *data);
 char			**parse_one_command(char *com);
-void			execute_command(char **tokens, t_data *data);
+void			execute_command(t_trash *t, t_data *data);
 void			cd(char **args, t_data *data);
 void			echo(char *l);
 char			*delete_leading_zeros_and_tabs(const char *line);
