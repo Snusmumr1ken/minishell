@@ -24,8 +24,11 @@ static bool			manage_echo(char **coms, int i)
 		!ft_strcmp(l, "echo"))
 	{
 		echo(l);
+		free(l);
 		return (1);
 	}
+	if (l)
+		free(l);
 	return (0);
 }
 

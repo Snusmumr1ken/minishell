@@ -25,6 +25,8 @@ int			ft_strlen(const char *str)
 {
 	int		size;
 
+	if (!str)
+		return (0);
 	size = 0;
 	while (str[size] != '\0')
 		size++;

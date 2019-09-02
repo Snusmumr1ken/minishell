@@ -6,6 +6,8 @@ void			free_data(t_data *data)
 		free(data->HOME);
 	if (data->PATH)
 		free(data->PATH);
+	if (data->OLDPWD)
+		free(data->OLDPWD);
 }
 
 void			exit_with_error(char *error_text, t_data *data)

@@ -41,6 +41,7 @@ static int			read_buff(const int fd, char **line, char *str)
 	char	*temp;
 	int		i;
 
+	*line[0] = '\0';
 	while ((i = read(fd, buff, BUFF_SIZE)) > 0)
 	{
 		buff[i] = '\0';
@@ -92,7 +93,6 @@ int					get_next_line(const int fd, char **line)
 	if (read(fd, str[fd], 0) < 0 || fd > 4863 || line == NULL)
 		return (-1);
 	*line = (char*)malloc(1);
-	ft_strclr(*line);
 	if (str[fd] && ft_strlen(str[fd]) != 0)
 	{
 		if (parse_static(line, str[fd]))

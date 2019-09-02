@@ -7,12 +7,12 @@ char		*delete_leading_zeros_and_tabs(const char *line)
 	short		j;
 
 	i = 0;
-	j = 0;
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] == '\0')
 		return (NULL);
-	new_str = (char*)malloc(ft_strlen(line) - (i + 1));
+	new_str = (char*)malloc(ft_strlen(line) - i + 1);
+	j = 0;
 	while (line[i])
 	{
 		new_str[j] = line[i];
@@ -33,5 +33,6 @@ char		**parse_one_command(char *com)
 	if (!command)
 		return (NULL);
 	tokens = split(command);
+	free(command);
 	return (tokens);
 }
