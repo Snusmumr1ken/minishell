@@ -7,7 +7,7 @@ static char		*cut_data_path(t_data *data)
 	int 		i;
 	int 		j;
 
-	len = ft_strlen(data->PATH) - 5;
+	len = ft_strlen(data->PATH) - 4;
 	path = (char*)malloc(len);
 	path[len - 1] = '\0';
 	i = 5;

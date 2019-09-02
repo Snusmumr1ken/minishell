@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-static void			free_tokens(char **tokens)
+void			free_tokens(char **tokens)
 {
 	int 			i;
 
@@ -63,6 +63,7 @@ static void			main_loop(t_data *data)
 		coms = ft_strsplit(line, ';');
 		exec_coms(coms, data);
 		free(line);
+		free(coms);
 	}
 }
 
