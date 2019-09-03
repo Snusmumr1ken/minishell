@@ -56,10 +56,16 @@ void		create_path(char *path, char *p, char *home)
 void		move_by_path(char *p, t_data *data)
 {
 	char	*path;
+	char 	*home;
+	int 	len;
 
-	if (p[0] == '~')
+	if (!ft_strncmp(p, "~", 1))
 	{
-		path = (char*)malloc(ft_strlen(data->HOME) + ft_strlen(p));
+		home = cut_data_home(data);
+		len = ft_strlen(home) + ft_strlen(p);
+		free(home);
+		path = (char*)malloc(len);
+		path[len - 1] = '\0';
 		create_path(path, p, data->HOME);
 	}
 	else

@@ -60,10 +60,11 @@ static bool		basic_checks(char **tokens)
 void			my_setenv(char **tokens)
 {
 	bool		exist;
+
 	if (basic_checks(tokens))
 		return ;
 	exist = name_exist(tokens[1]);
-	if (exits && ft_atoi(tokens[3]) == 1)
+	if (exist && ft_atoi(tokens[3]) == 1)
 		ft_printf("It finds and overwrite\n");
 	else if (!exist)
 		ft_printf("Create new var\n");
