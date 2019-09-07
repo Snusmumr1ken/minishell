@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   setenv.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anyvchyk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/07 12:30:13 by anyvchyk          #+#    #+#             */
+/*   Updated: 2019/09/07 12:30:14 by anyvchyk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 static bool		name_exist(const char *name)
@@ -57,27 +69,28 @@ static bool		basic_checks(char **tokens)
 	return (0);
 }
 
-static void		add_new_var(char **tokens)
+void		add_new_var(int fd, char **tokens)
 {
-	int 		fd;
-
-	fd = open(".minishellrc", O_RDWR | O_APPEND);
 	write(fd, tokens[1], ft_strlen(tokens[1]));
 	write(fd, "=", 1);
 	write(fd, tokens[2], ft_strlen(tokens[2]));
 	write(fd, "\n", 1);
-	close(fd);
 }
 
 void			my_setenv(char **tokens)
 {
 	bool		exist;
+	int 		fd;
 
 	if (basic_checks(tokens))
 		return ;
 	exist = name_exist(tokens[1]);
 	if (exist && ft_atoi(tokens[3]) == 1)
-		ft_printf("It finds and overwrite\n");
+		overwrite(tokens);
 	else if (!exist)
-		add_new_var(tokens);
+	{
+		fd = open(".minishellrc", O_RDWR | O_APPEND);
+		add_new_var(fd, tokens);
+		close(fd);
+	}
 }

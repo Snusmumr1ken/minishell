@@ -27,6 +27,8 @@ typedef struct	s_data
 	char 		*OLDPWD;
 }				t_data;
 
+void			overwrite(char **tokens);
+void			add_new_var(int fd, char **tokens);
 void			free_tokens(char **tokens);
 void			free_data(t_data *data);
 void			env(void);
