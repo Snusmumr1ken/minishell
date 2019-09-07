@@ -42,7 +42,7 @@ static void			creat_minishellrc(t_data *data)
 	close(fd);
 }
 
-static void			init_from_rc(t_data *data)
+void				init_from_rc(t_data *data)
 {
 	int 			fd;
 	int				res;

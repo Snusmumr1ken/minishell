@@ -20,7 +20,7 @@ void			env(void)
 
 	line = NULL;
 	fd = open(".minishellrc", O_RDONLY);
-	while ((i = get_next_line(fd, &line)))
+	while ((i = get_next_line(fd, &line)) == 1)
 	{
 		write(1, line, ft_strlen(line));
 		write(1, "\n", 1);

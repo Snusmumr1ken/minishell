@@ -12,26 +12,39 @@
 
 #include "../includes/minishell.h"
 
+static void		free_trash_and_data(t_trash *t, t_data *data)
+{
+	free(t->line);
+	t->line = NULL;
+	free_tokens(t->commands);
+	free_tokens(t->tokens);
+	free_data(data);
+}
+
+static void		run_child_process(t_trash *t, t_data *data)
+{
+	char 		*path;
+
+	if (try_to_access(t->tokens[0]))
+		path = ft_strdup(t->tokens[0]);
+	else
+		path = check_env(t->tokens, data);
+	if (path == NULL || (execve(path, t->tokens, NULL)) == -1)
+	{
+		ft_printf("minishell: command not found: %s\n", t->tokens[0]);
+		free_trash_and_data(t, data);
+		exit(1);
+	}
+}
+
 static void		launch_proc(t_trash *t, t_data *data)
 {
 	pid_t		pid;
 	int			status;
-	char 		*path;
 
 	pid = fork();
 	if (pid == 0)
-	{
-		path = check_env(t->tokens, data);
-		if (path == NULL || (execve(path, t->tokens, NULL)) == -1)
-		{
-			free(t->line);
-			free_tokens(t->commands);
-			free_tokens(t->tokens);
-			free_data(data);
-			write(2, "minishell: command not found\n", 29);
-			exit(1);
-		}
-	}
+		run_child_process(t, data);
 	else if (pid < 0)
 		exit_with_error("error forking\0", data);
 	else
@@ -49,7 +62,7 @@ void			execute_command(t_trash *t, t_data *data)
 	else if (!ft_strcmp(t->tokens[0], "env"))
 		env();
 	else if (!ft_strcmp(t->tokens[0], "setenv"))
-		my_setenv(t->tokens);
+		my_setenv(t->tokens, data);
 	else if (!ft_strcmp(t->tokens[0], "cd"))
 		cd(t->tokens, data);
 	else if (!ft_strcmp(t->tokens[0], "clear"))

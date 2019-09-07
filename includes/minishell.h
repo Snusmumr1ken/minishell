@@ -44,7 +44,7 @@ void			add_new_var(int fd, char **tokens);
 void			free_tokens(char **tokens);
 void			free_data(t_data *data);
 void			env(void);
-void			my_setenv(char **tokens);
+void			my_setenv(char **tokens, t_data *data);
 void			tell_no_warranty(void);
 void			initialize(t_data *data);
 void			parse_line(char *line);
@@ -58,5 +58,7 @@ void			echo(char *l);
 char			*delete_leading_zeros_and_tabs(const char *line);
 char			*cut_data_home(t_data *data);
 char			*check_env(char **args, t_data *data);
+void			init_from_rc(t_data *data);
+bool			try_to_access(char *path);
 
 #endif

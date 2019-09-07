@@ -33,7 +33,7 @@ static char		*cut_data_path(t_data *data)
 	return (path);
 }
 
-static bool		try_to_access(char *path)
+bool			try_to_access(char *path)
 {
 	if (access(path, F_OK) == -1)
 		return (0);
