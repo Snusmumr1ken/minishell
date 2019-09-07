@@ -12,33 +12,22 @@
 
 #include "../includes/minishell.h"
 
-static void			set_data_from_sys(t_data *data)
-{
-	extern char		**environ;
-	int				i;
-
-	i = -1;
-	while (environ[++i])
-	{
-		if (!ft_strncmp(environ[i], "PATH=", 5))
-			data->PATH = ft_strdup(environ[i]);
-		else if (!ft_strncmp(environ[i], "HOME=", 5))
-			data->HOME = ft_strdup(environ[i]);
-	}
-}
-
 static void			creat_minishellrc(t_data *data)
 {
 	int 			fd;
+	extern char		**environ;
+	int				i;
 
 	fd = open(".minishellrc", O_WRONLY | O_CREAT);
 	if (fd == -1)
 		exit_with_error("minishellrc is not present, but it also cannot be created\0", data);
 	fchmod(fd, 0755);
-	write(fd, data->HOME, ft_strlen(data->HOME));
-	write(fd, "\n", 1);
-	write(fd, data->PATH, ft_strlen(data->PATH));
-	write(fd, "\n", 1);
+	i = -1;
+	while (environ[++i])
+	{
+		write(fd, environ[i], ft_strlen(environ[i]));
+		write(fd, "\n", 1);
+	}
 	close(fd);
 }
 
@@ -70,11 +59,7 @@ void				initialize(t_data *data)
 	data->OLDPWD = NULL;
 
 	if (access(".minishellrc", F_OK) == -1)
-	{
-		set_data_from_sys(data);
 		creat_minishellrc(data);
-	}
-	else
-		init_from_rc(data);
+	init_from_rc(data);
 	data->OLDPWD = cut_data_home(data);
 }
