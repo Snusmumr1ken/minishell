@@ -22,6 +22,7 @@ static void			creat_minishellrc(t_data *data)
 	fd = open(".minishellrc", O_WRONLY | O_CREAT);
 	if (fd == -1)
 		exit_with_error("minishellrc is not present, but it also cannot be created\0", data);
+	fchmod(fd, 0755);
 	write(fd, data->HOME, ft_strlen(data->HOME));
 	write(fd, "\n", 1);
 	write(fd, data->PATH, ft_strlen(data->PATH));

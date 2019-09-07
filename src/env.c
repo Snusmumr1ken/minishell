@@ -6,6 +6,7 @@ void			env(void)
 	char 		*line;
 	int 		i;
 
+	line = NULL;
 	fd = open(".minishellrc", O_RDONLY);
 	while ((i = get_next_line(fd, &line)))
 	{
@@ -13,6 +14,7 @@ void			env(void)
 		write(1, "\n", 1);
 		free(line);
 	}
-	free(line);
+	if (line)
+		free(line);
 	close(fd);
 }

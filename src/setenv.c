@@ -57,6 +57,18 @@ static bool		basic_checks(char **tokens)
 	return (0);
 }
 
+static void		add_new_var(char **tokens)
+{
+	int 		fd;
+
+	fd = open(".minishellrc", O_RDWR | O_APPEND);
+	write(fd, tokens[1], ft_strlen(tokens[1]));
+	write(fd, "=", 1);
+	write(fd, tokens[2], ft_strlen(tokens[2]));
+	write(fd, "\n", 1);
+	close(fd);
+}
+
 void			my_setenv(char **tokens)
 {
 	bool		exist;
@@ -67,5 +79,5 @@ void			my_setenv(char **tokens)
 	if (exist && ft_atoi(tokens[3]) == 1)
 		ft_printf("It finds and overwrite\n");
 	else if (!exist)
-		ft_printf("Create new var\n");
+		add_new_var(tokens);
 }
