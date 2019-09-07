@@ -32,33 +32,27 @@ typedef struct	s_trash
 	char		**tokens;
 }				t_trash;
 
-typedef struct	s_data
-{
-	char		*PATH;
-	char		*HOME;
-	char		*OLDPWD;
-}				t_data;
-
 void			overwrite(char **tokens);
 void			add_new_var(int fd, char **tokens);
 void			free_tokens(char **tokens);
-void			free_data(t_data *data);
 void			env(void);
-void			my_setenv(char **tokens, t_data *data);
+void			my_setenv(char **tokens);
 void			tell_no_warranty(void);
-void			initialize(t_data *data);
+void			initialize(void);
 void			parse_line(char *line);
-void			pwd(bool color, t_data *data);
+void			pwd(bool color);
 char			**split(const char *str);
-void			exit_with_error(char *error_text, t_data *data);
+void			exit_with_error(char *error_text);
 char			**parse_one_command(char *com);
-void			execute_command(t_trash *t, t_data *data);
-void			cd(char **args, t_data *data);
+
+char			*cut_var(int num, char *line);
+char			*get_line_from_rc(char *var);
+
+void			execute_command(t_trash *t);
+void			cd(char **args);
 void			echo(char *l);
 char			*delete_leading_zeros_and_tabs(const char *line);
-char			*cut_data_home(t_data *data);
-char			*check_env(char **args, t_data *data);
-void			init_from_rc(t_data *data);
+char			*check_env(char **args);
 bool			try_to_access(char *path);
 
 #endif

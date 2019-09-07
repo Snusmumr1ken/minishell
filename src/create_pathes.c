@@ -12,27 +12,6 @@
 
 #include "../includes/minishell.h"
 
-static char		*cut_data_path(t_data *data)
-{
-	char 		*path;
-	int 		len;
-	int 		i;
-	int 		j;
-
-	len = ft_strlen(data->PATH) - 4;
-	path = (char*)malloc(len);
-	path[len - 1] = '\0';
-	i = 5;
-	j = 0;
-	while (data->PATH[i])
-	{
-		path[j] = data->PATH[i];
-		i++;
-		j++;
-	}
-	return (path);
-}
-
 bool			try_to_access(char *path)
 {
 	if (access(path, F_OK) == -1)
@@ -41,7 +20,7 @@ bool			try_to_access(char *path)
 		return (1);
 }
 
-static void		free_paths(char **paths, char *path)
+static void		free_paths(char **paths, char *path1, char *path2)
 {
 	int 		i;
 
@@ -49,34 +28,40 @@ static void		free_paths(char **paths, char *path)
 	while (paths[++i])
 		free(paths[i]);
 	free(paths);
-	if (path)
-		free(path);
+	if (path1)
+		free(path1);
+	if (path2)
+		free(path2);
 }
 
-char			*check_env(char **args, t_data *data)
+char			*check_env(char **args)
 {
 	char 		**paths;
-	char 		*path;
+	char 		*path1;
+	char		*path2;
 	char 		*obj;
 	int 		i;
 
-	path = cut_data_path(data);
-	paths = ft_strsplit(path, ':');
+	path1 = get_line_from_rc("PATH");
+	if (!path1)
+		return (NULL);
+	path2 = cut_var(5, path1);
+	paths = ft_strsplit(path2, ':');
 	i = -1;
 	while (paths[++i])
 	{
-		free(path);
-		path = ft_strjoin(paths[i], "/");
-		obj = ft_strjoin(path, args[0]);
+		free(path1);
+		path1 = ft_strjoin(paths[i], "/");
+		obj = ft_strjoin(path1, args[0]);
 		if (try_to_access(obj))
 		{
-			free_paths(paths, path);
+			free_paths(paths, path1, path2);
 			return (obj);
 		}
-		free(path);
-		path = NULL;
+		free(path1);
+		path1 = NULL;
 		free(obj);
 	}
-	free_paths(paths, path);
+	free_paths(paths, path1, path2);
 	return (NULL);
 }

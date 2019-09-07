@@ -12,12 +12,12 @@
 
 #include "../includes/minishell.h"
 
-void	pwd(bool color, t_data *data)
+void	pwd(bool color)
 {
 	char dir[1000];
 
 	if (getcwd(dir, 1000) == NULL)
-		exit_with_error("getcwd failed in pwd function\0", data);
+		exit_with_error("getcwd failed in pwd function\0");
 	if (color)
 	{
 		ft_printf("\033[34m");

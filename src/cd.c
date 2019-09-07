@@ -12,35 +12,17 @@
 
 #include "../includes/minishell.h"
 
-char			*cut_data_home(t_data *data)
+static void		move_home(void)
 {
-	char 		*home;
-	int 		len;
-	int 		i;
-	int 		j;
-
-	len = ft_strlen(data->HOME) - 4;
-	home = (char*)malloc(len);
-	home[len - 1] = '\0';
-	i = 5;
-	j = 0;
-	while (data->HOME[i])
-	{
-		home[j] = data->HOME[i];
-		i++;
-		j++;
-	}
-	return (home);
-}
-
-static void		move_home(t_data *data)
-{
+	char		*line;
 	char 		*home;
 
-	home = cut_data_home(data);
+	line = get_line_from_rc("HOME");
+	home = cut_var(5, line);
 	if (chdir(home) != 0)
 		write(2, "minishell: cd: unable to move to the home dir\n", 46);
 	free(home);
+	free(line);
 }
 
 void		create_path(char *path, char *p, char *home)
@@ -87,15 +69,17 @@ void		move_by_path(char *p, t_data *data)
 	free(path);
 }
 
-static void		call_move_home(t_data *data)
+static void		call_move_home(void)
 {
-	char 		*p;
+	char		*line;
+	char 		*home;
 
-	p = cut_data_home(data);
-	free(data->OLDPWD);
-	data->OLDPWD = ft_strdup(p);
-	move_home(data);
-	free(p);
+	line = get_line_from_rc("HOME");
+	home = cut_var(5, line);
+	data->OLDPWD = ft_strdup(home);
+	move_home();
+	free(line);
+	free(home);
 }
 
 void			cd(char **args, t_data *data)

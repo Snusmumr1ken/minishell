@@ -77,7 +77,7 @@ void		add_new_var(int fd, char **tokens)
 	write(fd, "\n", 1);
 }
 
-void			my_setenv(char **tokens, t_data *data)
+void			my_setenv(char **tokens)
 {
 	bool		exist;
 	int 		fd;
@@ -93,9 +93,4 @@ void			my_setenv(char **tokens, t_data *data)
 		add_new_var(fd, tokens);
 		close(fd);
 	}
-	if (data->HOME)
-		free(data->HOME);
-	if (data->PATH)
-		free(data->PATH);
-	init_from_rc(data);
 }

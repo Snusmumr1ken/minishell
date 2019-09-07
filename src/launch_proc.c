@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static void		free_trash_and_data(t_trash *t, t_data *data)
+static void		free_trash_and_data(t_trash *t)
 {
 	free(t->line);
 	t->line = NULL;
@@ -21,7 +21,7 @@ static void		free_trash_and_data(t_trash *t, t_data *data)
 	free_data(data);
 }
 
-static void		run_child_process(t_trash *t, t_data *data)
+static void		run_child_process(t_trash *t)
 {
 	char 		*path;
 
@@ -37,14 +37,14 @@ static void		run_child_process(t_trash *t, t_data *data)
 	}
 }
 
-static void		launch_proc(t_trash *t, t_data *data)
+static void		launch_proc(t_trash *t)
 {
 	pid_t		pid;
 	int			status;
 
 	pid = fork();
 	if (pid == 0)
-		run_child_process(t, data);
+		run_child_process(t);
 	else if (pid < 0)
 		exit_with_error("error forking\0", data);
 	else
@@ -55,16 +55,16 @@ static void		launch_proc(t_trash *t, t_data *data)
 	}
 }
 
-void			execute_command(t_trash *t, t_data *data)
+void			execute_command(t_trash *t)
 {
 	if (!ft_strcmp(t->tokens[0], "pwd"))
-		pwd(0, data);
+		pwd(0);
 	else if (!ft_strcmp(t->tokens[0], "env"))
 		env();
 	else if (!ft_strcmp(t->tokens[0], "setenv"))
-		my_setenv(t->tokens, data);
+		my_setenv(t->tokens);
 	else if (!ft_strcmp(t->tokens[0], "cd"))
-		cd(t->tokens, data);
+		cd(t->tokens);
 	else if (!ft_strcmp(t->tokens[0], "clear"))
 		write(1, "\33[H\33[2J", 7);
 	else
