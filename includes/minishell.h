@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anyvchyk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/07 12:36:13 by anyvchyk          #+#    #+#             */
+/*   Updated: 2019/09/07 12:36:15 by anyvchyk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -15,16 +27,16 @@
 
 typedef struct	s_trash
 {
-	char 		*line;
-	char 		**commands;
-	char 		**tokens;
+	char		*line;
+	char		**commands;
+	char		**tokens;
 }				t_trash;
 
 typedef struct	s_data
 {
 	char		*PATH;
-	char 		*HOME;
-	char 		*OLDPWD;
+	char		*HOME;
+	char		*OLDPWD;
 }				t_data;
 
 void			overwrite(char **tokens);
