@@ -32,13 +32,13 @@ typedef struct	s_trash
 	char		**tokens;
 }				t_trash;
 
-void			overwrite(char **tokens);
-void			add_new_var(int fd, char **tokens);
+void			overwrite(char *var_name, char *var_value, char *p_to_rc);
+void			add_new_var(int fd, char *var_name, char *value);
 void			free_tokens(char **tokens);
-void			env(void);
-void			my_setenv(char **tokens);
+void			env(char *p_to_rc);
+void			my_setenv(char **tokens, char *p_to_rc);
 void			tell_no_warranty(void);
-void			initialize(void);
+char			*initialize(void);
 void			parse_line(char *line);
 void			pwd(bool color);
 char			**split(const char *str);
@@ -46,13 +46,13 @@ void			exit_with_error(char *error_text);
 char			**parse_one_command(char *com);
 
 char			*cut_var(int num, char *line);
-char			*get_line_from_rc(char *var);
+char			*get_line_from_rc(char *var, char *p_to_rc);
 
-void			execute_command(t_trash *t);
-void			cd(char **args);
+void			execute_command(t_trash *t, char *p_to_rc);
+void			cd(char **args, char *p_to_rc);
 void			echo(char *l);
 char			*delete_leading_zeros_and_tabs(const char *line);
-char			*check_env(char **args);
+char			*check_env(char **args, char *path_to_rc);
 bool			try_to_access(char *path);
 
 #endif

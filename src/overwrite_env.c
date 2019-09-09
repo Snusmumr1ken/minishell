@@ -12,38 +12,44 @@
 
 #include "../includes/minishell.h"
 
-static void			write_all_without_old_var(char **tokens, int fd, int new_fd)
+static void			write_all_without_old_var(char *var_name, int fd, int new_fd)
 {
 	char		*line;
 	char		*temp;
 	int 		res;
 
+	temp = ft_strjoin(var_name, "=");
 	while ((res = get_next_line(fd, &line)) == 1)
 	{
-		temp = ft_strjoin(tokens[1], "=");
 		if (ft_strncmp(temp, line, ft_strlen(temp)))
 		{
 			write(new_fd, line, ft_strlen(line));
 			write(new_fd, "\n", 1);
 		}
-		free(temp);
 		free(line);
 	}
 	free(line);
+	free(temp);
 }
 
-void			overwrite(char **tokens)
+void			overwrite(char *var_name, char *var_value, char *p_to_rc)
 {
 	int 		fd;
 	int 		new_fd;
+	char		*absolute_path_to_rc;
+	char		*absolute_path_to_tmp;
 
-	fd = open(".minishellrc", O_RDWR);
-	new_fd = open(".tmp", O_RDWR | O_CREAT | O_APPEND);
+	absolute_path_to_tmp = ft_strjoin(p_to_rc, "/.tmp");
+	absolute_path_to_rc = ft_strjoin(p_to_rc, "/.minishellrc");
+	fd = open(absolute_path_to_rc, O_RDWR);
+	new_fd = open(absolute_path_to_tmp, O_RDWR | O_CREAT | O_APPEND);
 	fchmod(new_fd, 0755);
-	write_all_without_old_var(tokens, fd, new_fd);
-	add_new_var(new_fd, tokens);
-	remove(".minishellrc");
-	rename(".tmp", ".minishellrc");
+	write_all_without_old_var(var_name, fd, new_fd);
+	add_new_var(new_fd, var_name, var_value);
 	close(fd);
+	remove(absolute_path_to_rc);
 	close(new_fd);
+	rename(absolute_path_to_tmp, absolute_path_to_rc);
+	free(absolute_path_to_tmp);
+	free(absolute_path_to_rc);
 }

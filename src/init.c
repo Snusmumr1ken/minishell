@@ -12,17 +12,19 @@
 
 #include "../includes/minishell.h"
 
-void				initialize(void)
+char				*initialize(void)
 {
 	int 			fd;
 	extern char		**environ;
 	int				i;
+	char 			dir[1000];
 
+	getcwd(dir, 1000);
 	if (!access(".minishellrc", F_OK))
-		return ;
+		return (ft_strdup(dir));
 	fd = open(".minishellrc", O_WRONLY | O_CREAT);
 	if (fd == -1)
-		exit_with_error("minishellrc is not present, but it also cannot be created\0", data);
+		exit_with_error("minishellrc is not present, but it also cannot be created\0");
 	fchmod(fd, 0755);
 	i = -1;
 	while (environ[++i])
@@ -31,4 +33,5 @@ void				initialize(void)
 		write(fd, "\n", 1);
 	}
 	close(fd);
+	return (ft_strdup(dir));
 }

@@ -12,15 +12,17 @@
 
 #include "../includes/minishell.h"
 
-static bool		name_exist(const char *name)
+static bool		name_exist(const char *name, char *p_to_rc)
 {
 	int			fd;
 	int 		res;
 	char 		*l;
 	char 		*line;
 
+	line = ft_strjoin(p_to_rc, "/.minishellrc");
+	fd = open(line, O_RDONLY);
+	free(line);
 	l = ft_strjoin(name, "=");
-	fd = open(".minishellrc", O_RDONLY);
 	while ((res = get_next_line(fd, &line)) == 1)
 	{
 		if (!ft_strncmp(line, l, ft_strlen(l)))
@@ -47,14 +49,14 @@ static int		check_number_of_tokens(char **tokens)
 	return (i);
 }
 
-static bool		basic_checks(char **tokens)
+static bool		basic_checks(char **tokens, char *p_to_rc)
 {
 	int 		var;
 
 	var = check_number_of_tokens(tokens);
 	if (var == 1)
 	{
-		env();
+		env(p_to_rc);
 		return (1);
 	}
 	if (var != 4)
@@ -69,28 +71,31 @@ static bool		basic_checks(char **tokens)
 	return (0);
 }
 
-void		add_new_var(int fd, char **tokens)
+void		add_new_var(int fd, char *var_name, char *value)
 {
-	write(fd, tokens[1], ft_strlen(tokens[1]));
+	write(fd, var_name, ft_strlen(var_name));
 	write(fd, "=", 1);
-	write(fd, tokens[2], ft_strlen(tokens[2]));
+	write(fd, value, ft_strlen(value));
 	write(fd, "\n", 1);
 }
 
-void			my_setenv(char **tokens)
+void			my_setenv(char **tokens, char *p_to_rc)
 {
 	bool		exist;
 	int 		fd;
+	char		*line;
 
-	if (basic_checks(tokens))
+	if (basic_checks(tokens, p_to_rc))
 		return ;
-	exist = name_exist(tokens[1]);
+	exist = name_exist(tokens[1], p_to_rc);
 	if (exist && ft_atoi(tokens[3]) == 1)
-		overwrite(tokens);
+		overwrite(tokens[1], tokens[2], p_to_rc);
 	else if (!exist)
 	{
-		fd = open(".minishellrc", O_RDWR | O_APPEND);
-		add_new_var(fd, tokens);
+		line = ft_strjoin(p_to_rc, "/.minishellrc");
+		fd = open(line, O_RDWR | O_APPEND);
+		free(line);
+		add_new_var(fd, tokens[1], tokens[2]);
 		close(fd);
 	}
 }

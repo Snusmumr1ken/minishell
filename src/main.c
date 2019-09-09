@@ -29,19 +29,18 @@ static bool			manage_echo(char **coms, int i)
 	return (0);
 }
 
-static void			manage_exit(t_trash *t, t_data *data)
+static void			manage_exit(t_trash *t)
 {
 	if (!ft_strcmp(t->tokens[0], "exit"))
 	{
 		free(t->line);
-		free_data(data);
 		free_tokens(t->tokens);
 		free_tokens(t->commands);
 		exit(0);
 	}
 }
 
-static void			exec_coms(t_trash *t, t_data *data)
+static void			exec_coms(t_trash *t, char *p_to_rc)
 {
 	int				i;
 
@@ -53,35 +52,35 @@ static void			exec_coms(t_trash *t, t_data *data)
 		t->tokens = parse_one_command(t->commands[i]);
 		if (!t->tokens)
 			return ;
-		manage_exit(t, data);
-		execute_command(t, data);
+		manage_exit(t);
+		execute_command(t, p_to_rc);
 		free_tokens(t->tokens);
 	}
 	free_tokens(t->commands);
 }
 
-static void			main_loop(t_data *data)
+static void			main_loop(char *path_to_rc)
 {
 	t_trash			t;
 
 	while (1)
 	{
-		pwd(1, data);
+		pwd(1);
 		write(1, "$ ", 2);
 		get_next_line(STDIN_FILENO, &t.line);
 		t.commands = ft_strsplit(t.line, ';');
-		exec_coms(&t, data);
+		exec_coms(&t, path_to_rc);
 		free(t.line);
 	}
 }
 
-int	main(void)
+int					main(void)
 {
-	t_data	data;
+	char			*p_to_rc;
 
 	write(1, "\33[H\33[2J", 7);
-	initialize(&data);
+	p_to_rc = initialize();
 	tell_no_warranty();
-	main_loop(&data);
+	main_loop(p_to_rc);
 	return (0);
 }

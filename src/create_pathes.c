@@ -34,7 +34,7 @@ static void		free_paths(char **paths, char *path1, char *path2)
 		free(path2);
 }
 
-char			*check_env(char **args)
+char			*check_env(char **args, char *path_to_rc)
 {
 	char 		**paths;
 	char 		*path1;
@@ -42,7 +42,7 @@ char			*check_env(char **args)
 	char 		*obj;
 	int 		i;
 
-	path1 = get_line_from_rc("PATH");
+	path1 = get_line_from_rc("PATH", path_to_rc);
 	if (!path1)
 		return (NULL);
 	path2 = cut_var(5, path1);

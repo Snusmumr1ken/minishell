@@ -12,14 +12,16 @@
 
 #include "../includes/minishell.h"
 
-void			env(void)
+void			env(char *p_to_rc)
 {
 	int 		fd;
 	char 		*line;
 	int 		i;
 
+	line = ft_strjoin(p_to_rc, "/.minishellrc");
+	fd = open(line, O_RDONLY);
+	free(line);
 	line = NULL;
-	fd = open(".minishellrc", O_RDONLY);
 	while ((i = get_next_line(fd, &line)) == 1)
 	{
 		write(1, line, ft_strlen(line));
