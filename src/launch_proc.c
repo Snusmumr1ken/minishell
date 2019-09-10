@@ -65,6 +65,8 @@ void			execute_command(t_trash *t, char *p_to_rc)
 		env(p_to_rc);
 	else if (!ft_strcmp(t->tokens[0], "setenv"))
 		my_setenv(t->tokens, p_to_rc);
+	else if (!ft_strcmp(t->tokens[0], "unsetenv"))
+		my_unsetenv(t->tokens[1], p_to_rc);
 	else if (!ft_strcmp(t->tokens[0], "cd"))
 		cd(t->tokens, p_to_rc);
 	else if (!ft_strcmp(t->tokens[0], "clear"))

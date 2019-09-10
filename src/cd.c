@@ -106,6 +106,8 @@ static void		call_move_oldpwd(char *p_to_rc)
 	if (!ft_strcmp(oldpwd, home))
 		call_move_home(p_to_rc);
 	move_by_path(oldpwd, p_to_rc);
+	free(home);
+	free(oldpwd);
 }
 
 void			cd(char **args, char *p_to_rc)

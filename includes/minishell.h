@@ -38,6 +38,7 @@ void			add_new_var(int fd, char *var_name, char *value);
 void			free_tokens(char **tokens);
 void			env(char *p_to_rc);
 void			my_setenv(char **tokens, char *p_to_rc);
+void			my_unsetenv(char *var_name, char *p_to_rc);
 void			tell_no_warranty(void);
 char			*initialize(void);
 void			parse_line(char *line);
