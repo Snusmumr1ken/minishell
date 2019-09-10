@@ -44,10 +44,10 @@ static char		*manage_tilde(char *p, char *p_to_rc)
 	home = cut_var(5, tmp);
 	len = ft_strlen(home) + ft_strlen(p);
 	free(tmp);
-	free(home);
 	tmp = (char*)malloc(len);
 	tmp[len - 1] = '\0';
 	create_path(tmp, p, home);
+	free(home);
 	return (tmp);
 }
 

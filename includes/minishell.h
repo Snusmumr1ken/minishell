@@ -32,6 +32,7 @@ typedef struct	s_trash
 	char		**tokens;
 }				t_trash;
 
+char			**build_envp_from_rc(char *p_to_rc);
 void			overwrite(char *var_name, char *var_value, char *p_to_rc);
 void			add_new_var(int fd, char *var_name, char *value);
 void			free_tokens(char **tokens);

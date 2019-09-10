@@ -20,12 +20,11 @@ char			*get_line_from_rc(char *var, char *p_to_rc)
 	char		*look_for;
 
 	line = ft_strjoin(p_to_rc, "/.minishellrc");
+	free(p_to_rc);
 	fd = open(line, O_RDONLY);
+	free(line);
 	if (fd == -1)
-	{
-		free(line);
 		exit_with_error("cant open rc file\0");
-	}
 	look_for = ft_strjoin(var, "=");
 	while ((i = get_next_line(fd, &line)) == 1)
 	{

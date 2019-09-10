@@ -20,7 +20,7 @@ static void		free_trash(t_trash *t)
 	free_tokens(t->tokens);
 }
 
-static void		run_child_process(t_trash *t, char *p_to_rc)
+static void		run_child_process(t_trash *t, char *p_to_rc, char **envp)
 {
 	char 		*path;
 
@@ -28,7 +28,7 @@ static void		run_child_process(t_trash *t, char *p_to_rc)
 		path = ft_strdup(t->tokens[0]);
 	else
 		path = check_env(t->tokens, p_to_rc);
-	if (path == NULL || (execve(path, t->tokens, NULL)) == -1)
+	if (path == NULL || (execve(path, t->tokens, envp)) == -1)
 	{
 		ft_printf("minishell: command not found: %s\n", t->tokens[0]);
 		free_trash(t);
@@ -40,10 +40,12 @@ static void		launch_proc(t_trash *t, char *p_to_rc)
 {
 	pid_t		pid;
 	int			status;
+	char 		**envp;
 
+	envp = build_envp_from_rc(p_to_rc);
 	pid = fork();
 	if (pid == 0)
-		run_child_process(t, p_to_rc);
+		run_child_process(t, p_to_rc, envp);
 	else if (pid < 0)
 		exit_with_error("error forking\0");
 	else
@@ -51,6 +53,7 @@ static void		launch_proc(t_trash *t, char *p_to_rc)
 		waitpid(pid, &status, WUNTRACED);
 		while (!WIFEXITED(status) && !WIFSIGNALED(status))
 			waitpid(pid, &status, WUNTRACED);
+		free_tokens(envp);
 	}
 }
 
