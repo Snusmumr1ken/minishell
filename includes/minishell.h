@@ -52,7 +52,7 @@ char			*get_line_from_rc(char *var, char *p_to_rc);
 
 void			execute_command(t_trash *t, char *p_to_rc);
 void			cd(char **args, char *p_to_rc);
-void			echo(char *l);
+void			echo(char *l, char *p_to_rc);
 char			*delete_leading_zeros_and_tabs(const char *line);
 char			*check_env(char **args, char *path_to_rc);
 bool			try_to_access(char *path);

@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static bool			manage_echo(char **coms, int i)
+static bool			manage_echo(char **coms, int i, char *p_to_rc)
 {
 	char 			*l;
 
@@ -20,7 +20,7 @@ static bool			manage_echo(char **coms, int i)
 	if (!ft_strncmp(l, "echo ", 5) || !ft_strncmp(l, "echo\t", 5) ||
 		!ft_strcmp(l, "echo"))
 	{
-		echo(l);
+		echo(l, p_to_rc);
 		free(l);
 		return (1);
 	}
@@ -47,7 +47,7 @@ static void			exec_coms(t_trash *t, char *p_to_rc)
 	i = -1;
 	while (t->commands[++i])
 	{
-		if (manage_echo(t->commands, i))
+		if (manage_echo(t->commands, i, p_to_rc))
 			continue ;
 		t->tokens = parse_one_command(t->commands[i]);
 		if (!t->tokens)

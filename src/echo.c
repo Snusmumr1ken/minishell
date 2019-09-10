@@ -48,7 +48,47 @@ static void		write_from_quotes(char *l, int *i)
 	*i = pos;
 }
 
-void			echo(char *l)
+static char		*get_var_name(char *l, int *i)
+{
+	char 		buff[1000];
+	char 		*var;
+	int 		k;
+	int 		j;
+
+	k = *i;
+	k++;
+	j = 0;
+	while (l[k] != ' ' && l[k] != '\t' && l[k])
+	{
+		buff[j] = l[k];
+		k++;
+		j++;
+	}
+	*i = k - 1;
+	buff[j] = '\0';
+	var = ft_strdup(buff);
+	return (var);
+}
+
+static void		write_var(char *l, int *i, char *p_to_rc)
+{
+	char 		*var;
+	char 		*data;
+	char 		*buff;
+
+	data = get_var_name(l, i);
+	buff = ft_strdup(data);
+	var = get_line_from_rc(data, p_to_rc);
+	free(data);
+	data = cut_var(ft_strlen(buff) + 1, var);
+	if (!data)
+		return ;
+	free(var);
+	ft_printf("%s ", data);
+	free(data);
+}
+
+void			echo(char *l, char *p_to_rc)
 {
 	int			i;
 
@@ -59,7 +99,9 @@ void			echo(char *l)
 		i++;
 	while (l[i])
 	{
-		if (l[i] == '\'' || l[i] == '\"')
+		if (l[i] == '$')
+			write_var(l, &i, p_to_rc);
+		else if (l[i] == '\'' || l[i] == '\"')
 			write_from_quotes(l, &i);
 		else if (l[i] != ' ' && l[i] != '\t')
 			write(1, &l[i], 1);
