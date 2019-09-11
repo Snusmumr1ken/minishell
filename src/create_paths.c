@@ -22,7 +22,7 @@ bool			try_to_access(char *path)
 
 static void		free_paths(char **paths, char *path1, char *path2)
 {
-	int 		i;
+	int			i;
 
 	i = -1;
 	while (paths[++i])
@@ -34,25 +34,18 @@ static void		free_paths(char **paths, char *path1, char *path2)
 		free(path2);
 }
 
-char			*check_env(char **args, char *path_to_rc)
+static char		*try_paths_loop(char *path1,
+		char **paths, char *path2, char *arg)
 {
-	char 		**paths;
-	char 		*path1;
-	char		*path2;
-	char 		*obj;
-	int 		i;
+	int			i;
+	char		*obj;
 
-	path1 = get_line_from_rc("PATH", path_to_rc);
-	if (!path1)
-		return (NULL);
-	path2 = cut_var(5, path1);
-	paths = ft_strsplit(path2, ':');
 	i = -1;
 	while (paths[++i])
 	{
 		free(path1);
 		path1 = ft_strjoin(paths[i], "/");
-		obj = ft_strjoin(path1, args[0]);
+		obj = ft_strjoin(path1, arg);
 		if (try_to_access(obj))
 		{
 			free_paths(paths, path1, path2);
@@ -64,6 +57,20 @@ char			*check_env(char **args, char *path_to_rc)
 	}
 	free_paths(paths, path1, path2);
 	return (NULL);
+}
+
+char			*check_env(char **args, char *path_to_rc)
+{
+	char		**paths;
+	char		*path1;
+	char		*path2;
+
+	path1 = get_line_from_rc("PATH", path_to_rc);
+	if (!path1)
+		return (NULL);
+	path2 = cut_var(5, path1);
+	paths = ft_strsplit(path2, ':');
+	return (try_paths_loop(path1, paths, path2, args[0]));
 }
 
 char			*check_env_for_var(char *var, char *p_to_rc)

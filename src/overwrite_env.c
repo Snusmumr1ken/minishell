@@ -12,11 +12,12 @@
 
 #include "../includes/minishell.h"
 
-static void			write_all_without_old_var(char *var_name, int fd, int new_fd)
+static void			write_all_without_old_var(char *var_name,
+		int fd, int new_fd)
 {
-	char		*line;
-	char		*temp;
-	int 		res;
+	char			*line;
+	char			*temp;
+	int				res;
 
 	temp = ft_strjoin(var_name, "=");
 	while ((res = get_next_line(fd, &line)) == 1)
@@ -32,12 +33,12 @@ static void			write_all_without_old_var(char *var_name, int fd, int new_fd)
 	free(temp);
 }
 
-void			overwrite(char *var_name, char *var_value, char *p_to_rc)
+void				overwrite(char *var_name, char *var_value, char *p_to_rc)
 {
-	int 		fd;
-	int 		new_fd;
-	char		*absolute_path_to_rc;
-	char		*absolute_path_to_tmp;
+	int				fd;
+	int				new_fd;
+	char			*absolute_path_to_rc;
+	char			*absolute_path_to_tmp;
 
 	absolute_path_to_tmp = ft_strjoin(p_to_rc, "/.tmp");
 	absolute_path_to_rc = ft_strjoin(p_to_rc, "/.minishellrc");
@@ -54,12 +55,12 @@ void			overwrite(char *var_name, char *var_value, char *p_to_rc)
 	free(absolute_path_to_rc);
 }
 
-void			my_unsetenv(char *var_name, char *p_to_rc)
+void				my_unsetenv(char *var_name, char *p_to_rc)
 {
-	int 		fd;
-	int 		new_fd;
-	char		*absolute_path_to_rc;
-	char		*absolute_path_to_tmp;
+	int				fd;
+	int				new_fd;
+	char			*absolute_path_to_rc;
+	char			*absolute_path_to_tmp;
 
 	absolute_path_to_tmp = ft_strjoin(p_to_rc, "/.tmp");
 	absolute_path_to_rc = ft_strjoin(p_to_rc, "/.minishellrc");

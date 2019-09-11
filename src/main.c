@@ -14,7 +14,7 @@
 
 static bool			manage_echo(char **coms, int i, char *p_to_rc)
 {
-	char 			*l;
+	char			*l;
 
 	l = delete_leading_zeros_and_tabs(coms[i]);
 	if (!ft_strncmp(l, "echo ", 5) || !ft_strncmp(l, "echo\t", 5) ||

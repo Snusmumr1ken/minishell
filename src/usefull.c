@@ -14,7 +14,7 @@
 
 void			free_tokens(char **tokens)
 {
-	int 			i;
+	int			i;
 
 	i = 0;
 	while (tokens[i])
@@ -37,11 +37,11 @@ void			exit_with_error(char *error_text)
 
 static int		get_num_of_vars(char *p_to_rc)
 {
-	char 		*rc;
-	int 		fd;
-	int 		num;
-	char 		*line;
-	int 		res;
+	char		*rc;
+	int			fd;
+	int			num;
+	char		*line;
+	int			res;
 
 	rc = ft_strjoin(p_to_rc, "/.minishellrc");
 	fd = open(rc, O_RDONLY);
@@ -59,11 +59,11 @@ static int		get_num_of_vars(char *p_to_rc)
 
 static void		fill_envp(char *p_to_rc, char **envp)
 {
-	char 		*rc;
-	int 		fd;
-	char 		*line;
-	int 		res;
-	int 		i;
+	char		*rc;
+	int			fd;
+	char		*line;
+	int			res;
+	int			i;
 
 	rc = ft_strjoin(p_to_rc, "/.minishellrc");
 	fd = open(rc, O_RDONLY);
@@ -81,8 +81,8 @@ static void		fill_envp(char *p_to_rc, char **envp)
 
 char			**build_envp_from_rc(char *p_to_rc)
 {
-	char 		**envp;
-	int 		size;
+	char		**envp;
+	int			size;
 
 	size = get_num_of_vars(p_to_rc);
 	envp = (char**)malloc(sizeof(envp) * (size + 1));

@@ -12,45 +12,6 @@
 
 #include "../includes/minishell.h"
 
-void		create_path(char *path, char *p, char *home)
-{
-	int 	i;
-	int 	j;
-
-	i = 0;
-	j = 0;
-	while (home[i])
-	{
-		path[j] = home[i];
-		i++;
-		j++;
-	}
-	i = 1;
-	while (p[i])
-	{
-		path[j] = p[i];
-		i++;
-		j++;
-	}
-}
-
-static char		*manage_tilde(char *p, char *p_to_rc)
-{
-	char		*tmp;
-	char		*home;
-	int 		len;
-
-	tmp = get_line_from_rc("HOME", p_to_rc);
-	home = cut_var(5, tmp);
-	len = ft_strlen(home) + ft_strlen(p);
-	free(tmp);
-	tmp = (char*)malloc(len);
-	tmp[len - 1] = '\0';
-	create_path(tmp, p, home);
-	free(home);
-	return (tmp);
-}
-
 static void		move_by_path(char *p, char *p_to_rc)
 {
 	char		*path;
@@ -67,7 +28,7 @@ static void		move_by_path(char *p, char *p_to_rc)
 static void		move_home(char *p_to_rc)
 {
 	char		*line;
-	char 		*home;
+	char		*home;
 
 	line = get_line_from_rc("HOME", p_to_rc);
 	home = cut_var(5, line);
@@ -80,7 +41,7 @@ static void		move_home(char *p_to_rc)
 static void		call_move_home(char *p_to_rc)
 {
 	char		*line;
-	char 		*home;
+	char		*home;
 
 	line = get_line_from_rc("HOME", p_to_rc);
 	home = cut_var(5, line);
@@ -95,7 +56,7 @@ static void		call_move_oldpwd(char *p_to_rc)
 	char		*i;
 	char		*j;
 	char		*oldpwd;
-	char 		*home;
+	char		*home;
 
 	i = get_line_from_rc("HOME", p_to_rc);
 	j = get_line_from_rc("OLDPWD", p_to_rc);
@@ -118,7 +79,6 @@ void			cd(char **args, char *p_to_rc)
 		path = check_env_for_var(args[1], p_to_rc);
 	else
 		path = ft_strdup(args[1]);
-
 	if (args[1] == NULL)
 		call_move_home(p_to_rc);
 	else if (!ft_strcmp(path, "-"))

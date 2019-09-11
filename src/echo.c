@@ -14,8 +14,8 @@
 
 static bool		check_line_for_quotes(const char *l)
 {
-	int 		i;
-	int 		q;
+	int			i;
+	int			q;
 
 	i = 0;
 	q = 0;
@@ -35,7 +35,7 @@ static bool		check_line_for_quotes(const char *l)
 
 static void		write_from_quotes(char *l, int *i)
 {
-	int 		pos;
+	int			pos;
 
 	pos = *i;
 	pos++;
@@ -50,10 +50,10 @@ static void		write_from_quotes(char *l, int *i)
 
 static char		*get_var_name(char *l, int *i)
 {
-	char 		buff[1000];
-	char 		*var;
-	int 		k;
-	int 		j;
+	char		buff[1000];
+	char		*var;
+	int			k;
+	int			j;
 
 	k = *i;
 	k++;
@@ -72,9 +72,9 @@ static char		*get_var_name(char *l, int *i)
 
 static void		write_var(char *l, int *i, char *p_to_rc)
 {
-	char 		*var;
-	char 		*data;
-	char 		*buff;
+	char		*var;
+	char		*data;
+	char		*buff;
 
 	data = get_var_name(l, i);
 	buff = ft_strdup(data);
@@ -105,7 +105,8 @@ void			echo(char *l, char *p_to_rc)
 			write_from_quotes(l, &i);
 		else if (l[i] != ' ' && l[i] != '\t')
 			write(1, &l[i], 1);
-		else if (l[i - 1] != ' ' && l[i - 1] != '\t' && l[i - 1] != '\'' && l[i - 1] != '\"')
+		else if (l[i - 1] != ' ' && l[i - 1] != '\t' &&
+			l[i - 1] != '\'' && l[i - 1] != '\"')
 			write(1, " ", 1);
 		i++;
 	}

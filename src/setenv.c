@@ -15,9 +15,9 @@
 static bool		name_exist(const char *name, char *p_to_rc)
 {
 	int			fd;
-	int 		res;
-	char 		*l;
-	char 		*line;
+	int			res;
+	char		*l;
+	char		*line;
 
 	line = ft_strjoin(p_to_rc, "/.minishellrc");
 	fd = open(line, O_RDONLY);
@@ -51,7 +51,7 @@ static int		check_number_of_tokens(char **tokens)
 
 static bool		basic_checks(char **tokens, char *p_to_rc)
 {
-	int 		var;
+	int			var;
 
 	var = check_number_of_tokens(tokens);
 	if (var == 1)
@@ -71,7 +71,7 @@ static bool		basic_checks(char **tokens, char *p_to_rc)
 	return (0);
 }
 
-void		add_new_var(int fd, char *var_name, char *value)
+void			add_new_var(int fd, char *var_name, char *value)
 {
 	write(fd, var_name, ft_strlen(var_name));
 	write(fd, "=", 1);
@@ -82,7 +82,7 @@ void		add_new_var(int fd, char *var_name, char *value)
 void			my_setenv(char **tokens, char *p_to_rc)
 {
 	bool		exist;
-	int 		fd;
+	int			fd;
 	char		*line;
 
 	if (basic_checks(tokens, p_to_rc))

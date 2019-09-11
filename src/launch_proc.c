@@ -22,7 +22,7 @@ static void		free_trash(t_trash *t)
 
 static void		run_child_process(t_trash *t, char *p_to_rc, char **envp)
 {
-	char 		*path;
+	char		*path;
 
 	if (try_to_access(t->tokens[0]))
 		path = ft_strdup(t->tokens[0]);
@@ -42,7 +42,7 @@ static void		launch_proc(t_trash *t, char *p_to_rc)
 {
 	pid_t		pid;
 	int			status;
-	char 		**envp;
+	char		**envp;
 
 	envp = build_envp_from_rc(p_to_rc);
 	pid = fork();
