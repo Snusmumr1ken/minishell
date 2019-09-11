@@ -65,3 +65,18 @@ char			*check_env(char **args, char *path_to_rc)
 	free_paths(paths, path1, path2);
 	return (NULL);
 }
+
+char			*check_env_for_var(char *var, char *p_to_rc)
+{
+	char		*tmp;
+	char		*data;
+
+	var += 1;
+	tmp = get_line_from_rc(var, p_to_rc);
+	if (tmp == NULL)
+		return (NULL);
+	data = cut_var(ft_strlen(var) + 1, tmp);
+	free(tmp);
+	var -= 1;
+	return (data);
+}

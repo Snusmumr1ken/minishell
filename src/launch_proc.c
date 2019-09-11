@@ -26,6 +26,8 @@ static void		run_child_process(t_trash *t, char *p_to_rc, char **envp)
 
 	if (try_to_access(t->tokens[0]))
 		path = ft_strdup(t->tokens[0]);
+	else if (!ft_strncmp(t->tokens[0], "$", 1))
+		path = check_env_for_var(t->tokens[0], p_to_rc);
 	else
 		path = check_env(t->tokens, p_to_rc);
 	if (path == NULL || (execve(path, t->tokens, envp)) == -1)

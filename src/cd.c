@@ -112,15 +112,23 @@ static void		call_move_oldpwd(char *p_to_rc)
 
 void			cd(char **args, char *p_to_rc)
 {
+	char		*path;
+
+	if (!ft_strncmp(args[1], "$", 1))
+		path = check_env_for_var(args[1], p_to_rc);
+	else
+		path = ft_strdup(args[1]);
+
 	if (args[1] == NULL)
 		call_move_home(p_to_rc);
-	else if (!ft_strcmp(args[1], "-"))
+	else if (!ft_strcmp(path, "-"))
 		call_move_oldpwd(p_to_rc);
 	else if (args[2] != NULL)
 		write(2, "minishell: cd: too many arguments\n", 34);
 	else
 	{
-		overwrite("OLDPWD", args[1], p_to_rc);
-		move_by_path(args[1], p_to_rc);
+		overwrite("OLDPWD", path, p_to_rc);
+		move_by_path(path, p_to_rc);
 	}
+	free(path);
 }

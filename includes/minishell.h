@@ -46,10 +46,9 @@ void			pwd(bool color);
 char			**split(const char *str);
 void			exit_with_error(char *error_text);
 char			**parse_one_command(char *com);
-
+char			*check_env_for_var(char *var, char *p_to_rc);
 char			*cut_var(int num, char *line);
 char			*get_line_from_rc(char *var, char *p_to_rc);
-
 void			execute_command(t_trash *t, char *p_to_rc);
 void			cd(char **args, char *p_to_rc);
 void			echo(char *l, char *p_to_rc);
