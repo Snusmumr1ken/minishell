@@ -29,10 +29,11 @@ static bool			manage_echo(char **coms, int i, char *p_to_rc)
 	return (0);
 }
 
-static void			manage_exit(t_trash *t)
+static void			manage_exit(t_trash *t, char *p_to_rc)
 {
 	if (!ft_strcmp(t->tokens[0], "exit"))
 	{
+		free(p_to_rc);
 		free(t->line);
 		free_tokens(t->tokens);
 		free_tokens(t->commands);
@@ -51,8 +52,11 @@ static void			exec_coms(t_trash *t, char *p_to_rc)
 			continue ;
 		t->tokens = parse_one_command(t->commands[i]);
 		if (!t->tokens)
+		{
+			free_tokens(t->commands);
 			return ;
-		manage_exit(t);
+		}
+		manage_exit(t, p_to_rc);
 		execute_command(t, p_to_rc);
 		free_tokens(t->tokens);
 	}

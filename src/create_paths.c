@@ -67,7 +67,10 @@ char			*check_env(char **args, char *path_to_rc)
 
 	path1 = get_line_from_rc("PATH", path_to_rc);
 	if (!path1)
+	{
+		free(path1);
 		return (NULL);
+	}
 	path2 = cut_var(5, path1);
 	paths = ft_strsplit(path2, ':');
 	return (try_paths_loop(path1, paths, path2, args[0]));

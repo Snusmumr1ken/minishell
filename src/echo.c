@@ -84,6 +84,7 @@ static void		write_var(char *l, int *i, char *p_to_rc)
 	if (!data)
 		return ;
 	free(var);
+	free(buff);
 	ft_printf("%s ", data);
 	free(data);
 }

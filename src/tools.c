@@ -99,7 +99,12 @@ char				*get_line_from_rc(char *var, char *p_to_rc)
 	}
 	free(look_for);
 	close(fd);
-	return ((!ft_strlen(line)) ? NULL : line);
+	if (!ft_strlen(line))
+	{
+		free(line);
+		return (NULL);
+	}
+	return (line);
 }
 
 char				*cut_var(int num, char *line)
