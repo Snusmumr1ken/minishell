@@ -31,31 +31,6 @@ void				pwd(bool color)
 	}
 }
 
-char				*initialize(void)
-{
-	int				fd;
-	extern char		**environ;
-	int				i;
-	char			dir[1000];
-
-	getcwd(dir, 1000);
-	if (!access(".minishellrc", F_OK))
-		return (ft_strdup(dir));
-	fd = open(".minishellrc", O_WRONLY | O_CREAT);
-	if (fd == -1)
-		exit_with_error("minishellrc is not "
-						"present, but it also cannot be created\0");
-	fchmod(fd, 0755);
-	i = -1;
-	while (environ[++i])
-	{
-		write(fd, environ[i], ft_strlen(environ[i]));
-		write(fd, "\n", 1);
-	}
-	close(fd);
-	return (ft_strdup(dir));
-}
-
 void				env(char *p_to_rc)
 {
 	int				fd;
@@ -77,6 +52,17 @@ void				env(char *p_to_rc)
 	close(fd);
 }
 
+static void			get_fd(int *fd, char *p_to_rc)
+{
+	char			*line;
+
+	line = ft_strjoin(p_to_rc, "/.minishellrc");
+	*fd = open(line, O_RDONLY);
+	free(line);
+	if (*fd == -1)
+		exit_with_error("cant open rc file\0");
+}
+
 char				*get_line_from_rc(char *var, char *p_to_rc)
 {
 	int				fd;
@@ -84,11 +70,7 @@ char				*get_line_from_rc(char *var, char *p_to_rc)
 	char			*line;
 	char			*look_for;
 
-	line = ft_strjoin(p_to_rc, "/.minishellrc");
-	fd = open(line, O_RDONLY);
-	free(line);
-	if (fd == -1)
-		exit_with_error("cant open rc file\0");
+	get_fd(&fd, p_to_rc);
 	look_for = ft_strjoin(var, "=");
 	while ((i = get_next_line(fd, &line)) == 1)
 	{

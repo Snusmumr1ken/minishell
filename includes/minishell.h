@@ -85,7 +85,6 @@ void			pwd(bool color);
 void			env(char *p_to_rc);
 char			*cut_var(int num, char *line);
 char			*get_line_from_rc(char *var, char *p_to_rc);
-char			*initialize(void);
 
 /*
 ** launch_proc.c
@@ -135,5 +134,6 @@ char			**build_envp_from_rc(char *p_to_rc);
 void			exit_with_error(char *error_text);
 
 void			tell_no_warranty(void);
+char			*initialize(void);
 
 #endif
