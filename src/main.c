@@ -66,12 +66,18 @@ static void			exec_coms(t_trash *t, char *p_to_rc)
 static void			main_loop(char *path_to_rc)
 {
 	t_trash			t;
+	int				res;
 
 	while (1)
 	{
 		pwd(1);
 		write(1, "$ ", 2);
-		get_next_line(STDIN_FILENO, &t.line);
+		if ((res = get_next_line(STDIN_FILENO, &t.line)) == 0)
+		{
+			write(1, "\n", 1);
+			free(t.line);
+			continue ;
+		}
 		t.commands = ft_strsplit(t.line, ';');
 		exec_coms(&t, path_to_rc);
 		free(t.line);
