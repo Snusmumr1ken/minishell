@@ -52,10 +52,7 @@ static void			exec_coms(t_trash *t, char *p_to_rc)
 			continue ;
 		t->tokens = parse_one_command(t->commands[i]);
 		if (!t->tokens)
-		{
-			free_tokens(t->commands);
-			return ;
-		}
+			continue ;
 		manage_exit(t, p_to_rc);
 		execute_command(t, p_to_rc);
 		free_tokens(t->tokens);
