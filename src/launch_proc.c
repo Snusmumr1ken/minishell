@@ -55,7 +55,8 @@ static void		launch_proc(t_trash *t, char *p_to_rc)
 		waitpid(pid, &status, WUNTRACED);
 		while (!WIFEXITED(status) && !WIFSIGNALED(status))
 			waitpid(pid, &status, WUNTRACED);
-		free_tokens(envp);
+		if (envp)
+			free_tokens(envp);
 	}
 }
 

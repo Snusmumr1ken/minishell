@@ -45,6 +45,11 @@ static int		get_num_of_vars(char *p_to_rc)
 
 	rc = ft_strjoin(p_to_rc, "/.minishellrc");
 	fd = open(rc, O_RDONLY);
+	if (fd == -1)
+	{
+		free(rc);
+		return (0);
+	}
 	num = 0;
 	while ((res = get_next_line(fd, &line)) == 1)
 	{
@@ -85,6 +90,8 @@ char			**build_envp_from_rc(char *p_to_rc)
 	int			size;
 
 	size = get_num_of_vars(p_to_rc);
+	if (!size)
+		return (NULL);
 	envp = (char**)malloc(sizeof(envp) * (size + 1));
 	envp[size] = NULL;
 	fill_envp(p_to_rc, envp);

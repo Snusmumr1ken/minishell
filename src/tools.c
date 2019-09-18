@@ -60,7 +60,7 @@ static void			get_fd(int *fd, char *p_to_rc)
 	*fd = open(line, O_RDONLY);
 	free(line);
 	if (*fd == -1)
-		exit_with_error("cant open rc file\0");
+		exit_with_error("can't open rc file\0");
 }
 
 char				*get_line_from_rc(char *var, char *p_to_rc)
