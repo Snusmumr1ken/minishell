@@ -42,10 +42,12 @@ static void		call_move_home(char *p_to_rc)
 {
 	char		*line;
 	char		*home;
+	char		dir[1000];
 
 	line = get_line_from_rc("HOME", p_to_rc);
 	home = cut_var(5, line);
-	overwrite("OLDPWD", home, p_to_rc);
+	getcwd(dir, 1000);
+	overwrite("OLDPWD", dir, p_to_rc);
 	move_home(p_to_rc);
 	free(line);
 	free(home);
@@ -53,19 +55,19 @@ static void		call_move_home(char *p_to_rc)
 
 static void		call_move_oldpwd(char *p_to_rc)
 {
-	char		*i;
-	char		*j;
+	char		*temp;
 	char		*oldpwd;
 	char		*home;
+	char		dir[1000];
 
-	i = get_line_from_rc("HOME", p_to_rc);
-	j = get_line_from_rc("OLDPWD", p_to_rc);
-	home = cut_var(5, i);
-	oldpwd = cut_var(7, j);
-	free(i);
-	free(j);
-	if (!ft_strcmp(oldpwd, home))
-		call_move_home(p_to_rc);
+	temp = get_line_from_rc("HOME", p_to_rc);
+	home = cut_var(5, temp);
+	free(temp);
+	temp = get_line_from_rc("OLDPWD", p_to_rc);
+	oldpwd = cut_var(7, temp);
+	free(temp);
+	getcwd(dir, 1000);
+	overwrite("OLDPWD", dir, p_to_rc);
 	move_by_path(oldpwd, p_to_rc);
 	free(home);
 	free(oldpwd);
@@ -74,6 +76,7 @@ static void		call_move_oldpwd(char *p_to_rc)
 void			cd(char **args, char *p_to_rc)
 {
 	char		*path;
+	char		dir[1000];
 
 	if (!ft_strncmp(args[1], "$", 1))
 		path = check_env_for_var(args[1], p_to_rc);
@@ -87,7 +90,8 @@ void			cd(char **args, char *p_to_rc)
 		write(2, "minishell: cd: too many arguments\n", 34);
 	else
 	{
-		overwrite("OLDPWD", path, p_to_rc);
+		getcwd(dir, 1000);
+		overwrite("OLDPWD", dir, p_to_rc);
 		move_by_path(path, p_to_rc);
 	}
 	free(path);
