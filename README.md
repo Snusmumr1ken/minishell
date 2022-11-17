@@ -8,4 +8,4 @@ To test it, just clone a repo and run `make`.
 
 ### Example
 
-<img src="minishell_example.gif" alt="Example gif" width="1092" height="635">
+<img src="minishell_example.gif" alt="Example gif">
